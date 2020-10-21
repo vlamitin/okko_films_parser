@@ -8,6 +8,8 @@ const SUBSCRIPTION = "SUBSCRIPTION"
 const COVER_IMAGE_TYPE = "COVER"
 const PORTRAIT_IMAGE_TYPE = "PORTRAIT"
 
+const UTF8_ENCODING = "utf-8"
+
 function disableAllBtns() {
     Array.from(document.querySelectorAll("button")).forEach(btn => btn.disabled = true)
 }
@@ -62,7 +64,8 @@ async function downloadFilms(elementAlias, elementType) {
         `films_${elementAlias}_${new Date().toISOString()}.csv`,
         ';',
         headers,
-        rows
+        rows,
+        UTF8_ENCODING
     )
 }
 
@@ -83,7 +86,7 @@ async function fetchFilms(elementAlias, elementType) {
     })
 }
 
-function downloadCsv(fileName, separator, headers, rows) {
+function downloadCsv(fileName, separator, headers, rows, encoding) {
     let content = '';
     [headers, ...rows].forEach(row => {
         content += row.join(separator) + '\r\n'
@@ -94,7 +97,7 @@ function downloadCsv(fileName, separator, headers, rows) {
         return
     }
 
-    const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' })
+    const blob = new Blob([content], { type: `text/csv;charset=${encoding};` })
     const url = URL.createObjectURL(blob)
     link.setAttribute('href', url)
     link.setAttribute('download', fileName)
