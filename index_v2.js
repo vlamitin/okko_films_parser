@@ -62,7 +62,7 @@ async function downloadFilms(elementAlias, elementType) {
 
     downloadCsv(
         `films_${elementAlias}_${new Date().toISOString()}.csv`,
-        ';',
+        ',',
         headers,
         rows,
         UTF8_ENCODING
