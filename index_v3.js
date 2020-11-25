@@ -91,6 +91,9 @@ function downloadCsv(fileName, separator, headers, rows, encoding) {
     [headers, ...rows].forEach(row => {
         const newRow = row.map(cell => {
             if (cell.includes(separator)) {
+                if (cell.includes('"')) {
+                    cell = cell.replace('"', "'")
+                }
                 return `"${cell}"`
             }
             return cell
