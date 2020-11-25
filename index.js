@@ -89,7 +89,13 @@ async function fetchFilms(elementAlias, elementType) {
 function downloadCsv(fileName, separator, headers, rows, encoding) {
     let content = '';
     [headers, ...rows].forEach(row => {
-        content += row.join(separator) + '\r\n'
+        const newRow = row.map(cell => {
+            if (cell.includes(separator)) {
+                return `"${cell}"`
+            }
+            return cell
+        })
+        content += newRow.join(separator) + '\r\n'
     })
 
     const link = document.createElement("a");
