@@ -37,6 +37,7 @@ async function downloadFilms(elementAlias, elementType) {
     const films = await fetchFilms(elementAlias, elementType)
     const headers = [
         "ID",
+        "UID",
         "Item title",
         "Final URL",
         "Image URL",
@@ -50,6 +51,7 @@ async function downloadFilms(elementAlias, elementType) {
 
         return [
             urlWords[urlWords.length - 1],
+            film.uid,
             film.name,
             film.url,
             film.picCoverUrl,
@@ -79,6 +81,7 @@ async function fetchFilms(elementAlias, elementType) {
 
         return {
             name: item.element.name,
+            uid: item.element.id,
             url: `https://okko.tv/${item.element.type}/${item.element.alias}`,
             picCoverUrl: coverItem ? coverItem.url : '',
             picPortraitUrl: portraitItem ? portraitItem.url : '',
