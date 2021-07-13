@@ -62,8 +62,18 @@ async function downloadFilms(elementAlias, elementType) {
         ]
     })
 
+    const fileNameElementAlias = function () {
+        if (elementAlias === 'msvod_all_optimum') {
+            return 'SVOD'
+        } else if (elementAlias === 'new-promo') {
+            return 'TVOD'
+        } else {
+            return elementAlias
+        }
+    }()
+
     downloadCsv(
-        `films_${elementAlias}_${new Date().toISOString()}.csv`,
+        `${fileNameElementAlias}_${new Date().toISOString().replaceAll(":", "_").replaceAll(".", "_")}.csv`,
         ',',
         headers,
         rows,
